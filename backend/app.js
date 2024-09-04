@@ -14,9 +14,10 @@ dotenv.config()
 const PORT = process.env.PORT
 
 //middlewares
-app.use(json())
 app.use(cors({
-    origin: '*', // Adjust this to only allow specific origins in production
+    origin: ["https://penny-wise-mern.vercel.app/"], // Adjust this to only allow specific origins in production
+    methods:["POST", "GET"],
+    credentials:true
 }));
 
 //routes
