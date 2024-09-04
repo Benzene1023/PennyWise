@@ -1,8 +1,8 @@
-import express, { json } from 'express';
+import express from 'express';
 import cors from 'cors';
 import { db } from './db/db.js';
 import { readdirSync } from 'fs';
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 import transectionRoute from './routes/transactions.js';
 import userRoute from './routes/user.js';
 
@@ -12,19 +12,27 @@ dotenv.config();
 
 const PORT = process.env.PORT;
 
+// Middlewares
+app.use(express.json()); // Middleware to parse JSON requests
+
 app.use(cors({
-    origin: "https://penny-wise-mern.vercel.app", // Specific origin allowed
+    origin: "https://penny-wise-mern.vercel.app", // Allow only this specific origin in production
     methods: ["POST", "GET", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"], // Adjust headers if needed
+    allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
+    credentials: true, // Allow credentials if necessary
+}));
+
+// Handling preflight requests
+app.options('*', cors({
+    origin: "https://penny-wise-mern.vercel.app",
+    methods: ["POST", "GET", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
 }));
 
-app.use(express.json()); // Middleware to parse JSON requests
-
-// Define routes after applying CORS middleware
+// Routes
 app.use("/api/v1/transections", transectionRoute);
 app.use("/api/v1/users", userRoute);
-
 
 const server = () => {
     db();
