@@ -12,19 +12,19 @@ dotenv.config();
 
 const PORT = process.env.PORT;
 
-//middlewares
 app.use(cors({
-    origin: ["https://penny-wise-mern.vercel.app"],
+    origin: "https://penny-wise-mern.vercel.app", // Specific origin allowed
     methods: ["POST", "GET", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"], // Add any other headers you expect to receive
+    allowedHeaders: ["Content-Type", "Authorization"], // Adjust headers if needed
     credentials: true,
 }));
 
-app.use(express.json()); // To parse incoming requests with JSON payloads
+app.use(express.json()); // Middleware to parse JSON requests
 
-//routes
+// Define routes after applying CORS middleware
 app.use("/api/v1/transections", transectionRoute);
 app.use("/api/v1/users", userRoute);
+
 
 const server = () => {
     db();
