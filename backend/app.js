@@ -31,9 +31,6 @@ app.options('*', cors({
 }));
 
 // Routes
-app.get("/",(req,res)=>{
-res.send("Hare Krishna");
-});
 app.use("/api/v1/transections", transectionRoute);
 app.use("/api/v1/users", userRoute);
 
