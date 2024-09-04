@@ -1,36 +1,36 @@
 import express, { json } from 'express';
 import cors from 'cors';
-import {db} from './db/db.js';
+import { db } from './db/db.js';
 import { readdirSync } from 'fs';
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 import transectionRoute from './routes/transactions.js';
 import userRoute from './routes/user.js';
 
+const app = express();
 
-const app = express()
+dotenv.config();
 
-dotenv.config()
-
-const PORT = process.env.PORT
+const PORT = process.env.PORT;
 
 //middlewares
 app.use(cors({
-    origin: ["https://penny-wise-mern.vercel.app/"], // Adjust this to only allow specific origins in production
-    methods:["POST", "GET"],
-    credentials:true
+    origin: ["https://penny-wise-mern.vercel.app"],
+    methods: ["POST", "GET", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"], // Add any other headers you expect to receive
+    credentials: true,
 }));
 
-//routes
-// readdirSync('./routes').map((route) => app.use('/api/v1', require('./routes/' + route)))
-app.use("/api/v1/transections",transectionRoute)
-app.use("/api/v1/users",userRoute)
+app.use(express.json()); // To parse incoming requests with JSON payloads
 
+//routes
+app.use("/api/v1/transections", transectionRoute);
+app.use("/api/v1/users", userRoute);
 
 const server = () => {
-    db()
+    db();
     app.listen(PORT, () => {
-        console.log('listening to port:', PORT)
-    })
+        console.log('listening to port:', PORT);
+    });
 }
 
-server()
+server();
