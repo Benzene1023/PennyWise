@@ -16,7 +16,7 @@ const PORT = process.env.PORT;
 app.use(express.json()); // Middleware to parse JSON requests
 
 app.use(cors({
-    origin: "https://penny-wise-mern.vercel.app", // Allow only this specific origin in production
+    origin: "penny-wise-phl31br8f-gourish-mondals-projects.vercel.app", // Allow only this specific origin in production
     methods: ["POST", "GET", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
     credentials: true, // Allow credentials if necessary
@@ -24,7 +24,7 @@ app.use(cors({
 
 // Handling preflight requests
 app.options('*', cors({
-    origin: "https://penny-wise-mern.vercel.app",
+    origin: "penny-wise-phl31br8f-gourish-mondals-projects.vercel.app",
     methods: ["POST", "GET", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
