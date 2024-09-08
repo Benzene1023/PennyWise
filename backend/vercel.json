@@ -2,15 +2,18 @@
     "version": 2,
     "builds": [
       {
-        "src": "api/**/*.js",
+        "src": "src/**/*.js",  // Adjusted to point to files in the 'src' folder
         "use": "@vercel/node"
       }
     ],
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "api/app.js",
-        "methods": ["GET","POST","PUT","DELETE","PATCH","OPTIONS"]
+        "dest": "src/app.js",
+        "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+        "headers": {
+            "Access-Control-Allow-Origin": "*" 
+        }
       }
     ]
 }
