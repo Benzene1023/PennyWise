@@ -9,7 +9,7 @@
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "api/app.js", // Adjust this if your app.js is under the 'api' folder
+        "dest": "api/app.js",
         "methods": ["GET","POST","PUT","DELETE","PATCH","OPTIONS"]
       }
     ]
