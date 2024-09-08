@@ -1,44 +1,39 @@
 import express from 'express';
 import cors from 'cors';
-import { db } from './db/db.js';
+import { db } from './db/db.js'; // Adjust this import path if necessary
 import dotenv from 'dotenv';
-import transectionRoute from './routes/transactions.js';
-import userRoute from './routes/user.js';
+import transectionRoute from './routes/transactions.js'; // Adjust this import path if necessary
+import userRoute from './routes/user.js'; // Adjust this import path if necessary
 
 const app = express();
-dotenv.config();  // Load environment variables
+dotenv.config();
 
-const PORT = process.env.PORT || 5000;  // Fallback to port 5000 if not specified
+const PORT = process.env.PORT || 5000; // Default to 5000 if not set
 
-// CORS Middleware: This ensures the frontend can communicate with your backend
+// CORS Middleware: Configure CORS for preflight and actual requests
 app.use(cors({
-    origin: "https://penny-wise-mern.vercel.app",  // Allow only this specific frontend
-    methods: ["POST", "GET", "OPTIONS", "PUT", "DELETE"],  // Allowed methods
-    allowedHeaders: ["Content-Type", "Authorization"],  // Allowed headers
-    credentials: true,  // Allow credentials (cookies, authorization headers)
+    origin: "https://penny-wise-mern.vercel.app", // Allow only this specific frontend origin
+    methods: ["POST", "GET", "OPTIONS", "PUT", "DELETE"], // Allowed methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
+    credentials: true // Allow credentials (cookies, authorization headers)
 }));
 
-// Middleware to parse JSON requests
-app.use(express.json());  // Parse incoming requests with JSON payloads
+// Middleware to parse JSON request bodies
+app.use(express.json());
 
-// Routes: Define your routes for the API
-app.use("/api/v1/transections", transectionRoute);  // Route for transactions
-app.use("/api/v1/users", userRoute);  // Route for users
+// Define your API routes
+app.use("/api/v1/transections", transectionRoute);
+app.use("/api/v1/users", userRoute);
 
-// Manual handling of preflight `OPTIONS` requests (optional but not necessary with `cors` middleware)
-app.options('*', (req, res) => {
-    res.header("Access-Control-Allow-Origin", "https://penny-wise-mern.vercel.app");  // Allow the frontend origin
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");  // Allowed methods
-    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");  // Allowed headers
-    res.sendStatus(200);  // Respond with 200 OK
-});
+// Handle preflight `OPTIONS` requests for all routes
+app.options('*', cors());
 
 // Start the server and connect to the database
 const server = () => {
-    db();  // Initialize the database connection
+    db(); // Connect to the database
     app.listen(PORT, () => {
-        console.log(`Server is listening on port ${PORT}`);
+        console.log(`Server is running on port ${PORT}`);
     });
 };
 
-server();  // Invoke the server startup function
+server();
