@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "backend/**/*.js",  // Includes all JS files under the 'backend' folder
+      "src": "backend/**/*.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "backend/app.js",  // Points to the 'app.js' in the 'backend' folder
+      "dest": "backend/app.js",
       "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"]
     }
   ]
