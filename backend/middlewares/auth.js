@@ -13,9 +13,8 @@ const authenticateToken = (req, res, next) => {
         }
 
         req.userId = decoded.userId;
-        
         next();
     });
 };
 
-export {authenticateToken};
+export { authenticateToken };
